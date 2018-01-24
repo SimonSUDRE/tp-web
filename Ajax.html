@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>jQuery.getJSON demo</title>
+    <style>
+      img {
+        height: 200px;
+        float: left;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+  </head>
+  <body>
+    <h1>Les 5 dernières images de Nantes sur Flickr</h1>
+    <input type="text" id="tag" name="">
+    <div id="images"></div>
+    <div id="grandimg"><img src=""></div>
+    <!--
+    <input type="text" id="monInput" placeholder="Que voulez-vous voir ?" /> 
+    <input type="button" id="go" value="Voir" onclick="ajax()" />
+    <br />
+    <div id="images"></div>
+    <br />
+    <div id="imageGrand"></div>
+    -->
+    <script>
+      (function() {
+        var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+        $tag = $("#tag");
+        $div = $("#images");
+        $grandimg = $("#grandimg > img");
+        titles = [];
+        setInterval(function(){
+          $.getJSON( flickerAPI, {
+            tags: $tag.val(),
+            format: "json"
+          })
+          .done(function( data ) {
+            $.each( data.items.slice(0, 5), function( i, item ) {
+              if (titles.indexOf(item.title) == -1 ) {
+                if (titles.length >= 5) {
+                  $div.children().last().remove();
+                  titles.shift();
+                }
+                $img = $("<img>").attr( "src", item.media.m ).click(function(){
+                  $grandimg.attr("src", $(this).attr("src").slice(0, -6,) + ".jpg");
+                });
+                $( "<div>").append($img).prependTo($div);
+                titles.push(item.title);
+              }
+            });
+          });
+        }, 1000);
+      })();
+      /*
+      var array = [];
+      function ajax() {
+        $('#images').html('');
+        var monImage = $('input:text').val();
+        var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+        $.getJSON( flickerAPI, {
+          tags: monImage,
+          format: "json"
+        })
+        .done(function( data ) {
+          $.each( data.items, function( i, item ) {
+            if(array.length < 5){
+              array.push(item.media.m);
+            }
+            if ( i == 4 ) return false;
+          });
+        });
+        list();
+      };
+
+      function list(){
+        $("#images").empty();
+        if($("#images").is(":empty")){
+          console.log("ok");
+        }
+        for (var i = 0; i < array.length; i++) {
+          $( "<img >" ).attr( "src",  array[i]).appendTo( "#images" );
+        }
+        setTimeout(list, 1500);
+      }
+
+      function grand(val) {
+        $("#imageGrand").empty();
+        $( "<img onclick='grand("+i+")'>" ).attr( "src",  array[val]).appendTo( "#imageGrand" );
+      };
+      */
+    </script>
+  </body>
+</html>

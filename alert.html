@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Javascript</title>
+		<style type="text/css">
+			#calculatrice table {
+				border:solid;
+				width:20%;
+			}
+			#calculatrice thead {
+				border-bottom: 10px solid;
+			}
+			#calculatrice button {
+				width:100%;
+			}
+		</style>
+	</head>
+	<body>	
+	</body>
+	<footer>
+		<script type="text/javascript">
+			console.log( "Objet : ", { "nom" : "DOE", "prenom" : "Jhon" } );
+			console.log( "Tableau : ", new Array("Val1", "Val2") );
+			console.log( "Variable : ", "Val1" );
+			function test() {
+				alert( "ok" );
+			}
+			console.log( "Fonction : ", test() );
+
+			document.write("<br />");
+
+			var a = 12, b = 4;
+			function MultipliePar2(b) {
+				var a = b * 2;
+				return a;
+			}
+			document.write("Le double de ", b, " est ", MultipliePar2(b), "<br />");
+			document.write("La valeur de a est ", a, "<br />");
+
+			document.write("<br />");
+
+			var d = 12, c = 4;
+			function MultipliePars2(c) {
+				d = c * 2; 
+				return d;
+			}
+			document.write("Le double de ", c, " est ", MultipliePars2(c), "<br />");
+			document.write("La valeur de a est ", d, "<br />");
+
+			document.write("<br />");
+
+			document.write("<table border=1 width=20%>");
+			document.write("<caption>Je suis un titre de tableau :-)</caption>");
+			for (var i = 1; i <= 12; i++) {
+				if(i%4 == 1){
+					document.write("<tr>");
+				}
+				document.write("<td align='center'>", i, "</td>");
+				if(i%4 == 0){
+					document.write("</tr>");
+				}
+			}
+			document.write("</table>");
+
+			document.write("<br />");
+
+			document.write("<input type='text' id='monInput' />");
+			document.write("<button onclick='getAge()'>Quel age as-tu ?</button>");
+
+			function getAge(){
+				var tab_personne = {
+					"anatole" : 19, 
+					"bernard" : 45,
+					"christophe" : 34,
+					"dominique" : 55,
+					"franck" : 28,
+					"georges" : 78,
+					"lucas" : 12,
+					"madeleine" : 30,
+					"pierre" : 25
+				};
+
+				var personne = document.getElementById("monInput").value;
+
+				if(personne == ""){
+					alert("saisir un prénom");
+				}
+				else {
+					var age = tab_personne[personne];
+					var p = personne.charAt(0).toUpperCase() + personne.substring(1).toLowerCase();
+					alert( p + " a " + age + " ans" );
+				}
+			}
+
+			document.write("<br />");
+			document.write("<br />");
+
+			var notes = [15, 12, 18, 14, 16, 16, 19, 13, 11, 10, 16, 15];
+			var total = 0;
+			for (var i = 0; i < notes.length; i++) {
+				total += notes[i];
+			}
+			// var moyenne = Math.round((total)*100)/100;
+			var moyenne = (total/notes.length).toFixed(2);
+			document.write("Moyenne : " + moyenne);
+
+			document.write("<br />");
+			document.write("<br />");
+
+			document.write("<button onclick='changeBackground('red')'>Rouge</button>");
+			document.write("<button onclick='changeBackground('green')'>Vert</button>");
+			document.write("<button onclick='changeBackground('blue')'>Bleu</button>");
+			document.write("<div id='monDiv' style='height:150px; width:150px; background-color:black'></div>");
+
+			function changeBackground(color) {
+				document.getElementById('monDiv').style.backgroundColor=color;
+			}
+
+			document.write("<br />");
+			document.write("<br />");
+
+
+			var temp = 0.0, oper = '';
+
+			function set(val) {
+				document.getElementById('monInput1').value += val;
+				temp = document.getElementById('monInput1').value;
+			}
+
+			function setOp(val) {
+				oper = val;
+			}
+
+			function erase() {
+				document.getElementById('monInput1').value = '';
+			}
+
+			function op() {
+				if(oper != null){
+
+				}
+				else {
+					alert("il manque un opérateur");
+				}
+				oper = '';
+			}
+
+			document.write("<div id='calculatrice'>");
+			document.write("<table>");
+			document.write("<div id='text'><thead><tr><td colspan=3><input type='text' id='monInput1'  disabled /></td><td></td><td></td><td></td></tr></thead></div>");
+			document.write("<div id='touche'><tbody><tr>");
+			document.write("<td><button onclick='set(7.0)' value=7>7</button></td>");
+			document.write("<td><button onclick='set(8.0)' value=8>8</button></td>");
+			document.write("<td><button onclick='set(9.0)' value=9>9</button></td>");
+			document.write("<td><button onclick='' value='+'>+</button></td>");
+
+			document.write("<tr>");
+			document.write("<td><button onclick='set(7.0)' value=4>4</button></td>");
+			document.write("<td><button onclick='set(5.0)' value=5>5</button></td>");
+			document.write("<td><button onclick='set(6.0)' value=6>6</button></td>");
+			document.write("<td><button onclick='' value='-'>-</button></td>");
+			document.write("</tr>");
+
+			document.write("<tr>");
+			document.write("<td><button onclick='set(1.0)' value=1>1</button></td>");
+			document.write("<td><button onclick='set(2.0)' value=2>2</button></td>");
+			document.write("<td><button onclick='set(3.0)' value=3>3</button></td>");
+			document.write("<td><button onclick='' value='*'>*</button></td>");
+			document.write("</tr>");
+
+			document.write("<tr>");
+			document.write("<td><button onclick='set(0.0)' value=0>0</button></td>");
+			document.write("<td><button onclick='set(0.001) value='.'>.</button></td>");
+			document.write("<td><button onclick='erase()' value='erase'>C</button></td>");
+			document.write("<td><button onclick='' value='/'>/</button></td>");
+			document.write("</tr></tbody>");
+
+			document.write("<tfoot><tr>");
+			document.write("<td></td><td></td><td></td><td><button onclick='' value='='>=</button></td>");
+			document.write("</tfoot></tr></table></div>");
+			-->
+		</script>		
+	</footer>
+</html>

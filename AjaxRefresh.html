@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.getJSON demo</title>
+  <style>
+  img {
+    height: 200px;
+    float: left;
+  }
+  </style>
+  <script src="https://code.jquery.com/jquery-1.12.3.js"></script>
+</head>
+<body>
+<input type="text" id="monInput" placeholder="Que voulez-vous voir ?" /> <input type="button" id="go" value="Voir" onclick="ajax()" />
+<h1>Les 5 dernières images sur Flickr</h1>
+<div id="images"></div>
+ 
+<script>
+  function ajax() {
+    $('#images').html('');
+    var monImage = $('input:text').val();
+    var flickerAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+      $.getJSON( flickerAPI, {
+        tags: monImage,
+        format: "json"
+      })
+      .done(function( data ) {
+        $.each( data.items, function( i, item ) {
+          $( "<img>" ).attr( "src", item.media.m ).appendTo( "#images" );
+          if ( i == 4 ) return false;
+        });
+      });
+      setTimeout(ajax, 1500);
+  };
+</script>
+ 
+</body>
+</html>
